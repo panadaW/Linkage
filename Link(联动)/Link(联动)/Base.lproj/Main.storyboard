@@ -96,22 +96,68 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="AOh-1C-CSf"/>
                                 </connections>
                             </collectionView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pQ0-LB-LXv">
+                                <rect key="frame" x="0.0" y="300" width="375" height="37"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首页" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1us-67-j9G">
+                                        <rect key="frame" x="26" y="8" width="34" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="科技" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLa-yo-xYL">
+                                        <rect key="frame" x="174" y="8" width="34" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新闻" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2g-d4-4LW">
+                                        <rect key="frame" x="325" y="6" width="42" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="HrD-Jl-wKD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="1us-67-j9G" firstAttribute="leading" secondItem="pQ0-LB-LXv" secondAttribute="leading" constant="26" id="6hf-5h-CUa"/>
+                                    <constraint firstItem="vLa-yo-xYL" firstAttribute="centerY" secondItem="O2g-d4-4LW" secondAttribute="centerY" id="7VE-TK-jPQ"/>
+                                    <constraint firstItem="O2g-d4-4LW" firstAttribute="trailing" secondItem="pQ0-LB-LXv" secondAttribute="trailingMargin" id="CAQ-hd-wO4"/>
+                                    <constraint firstItem="O2g-d4-4LW" firstAttribute="leading" secondItem="pQ0-LB-LXv" secondAttribute="leading" constant="325" id="LTb-ZH-q2N"/>
+                                    <constraint firstItem="vLa-yo-xYL" firstAttribute="leading" secondItem="pQ0-LB-LXv" secondAttribute="leading" constant="174" id="TPn-3J-pMj"/>
+                                    <constraint firstItem="O2g-d4-4LW" firstAttribute="top" secondItem="pQ0-LB-LXv" secondAttribute="top" constant="6" id="Tbx-1S-TKP"/>
+                                    <constraint firstItem="vLa-yo-xYL" firstAttribute="baseline" secondItem="1us-67-j9G" secondAttribute="baseline" id="U0P-Dl-65A"/>
+                                    <constraint firstItem="1us-67-j9G" firstAttribute="top" secondItem="pQ0-LB-LXv" secondAttribute="topMargin" id="Uui-j0-bvH"/>
+                                    <constraint firstItem="vLa-yo-xYL" firstAttribute="firstBaseline" secondItem="1us-67-j9G" secondAttribute="firstBaseline" id="YXB-mk-hcI"/>
+                                    <constraint firstItem="vLa-yo-xYL" firstAttribute="centerY" secondItem="pQ0-LB-LXv" secondAttribute="centerY" id="aUw-6f-hYp"/>
+                                    <constraint firstItem="1us-67-j9G" firstAttribute="bottom" secondItem="pQ0-LB-LXv" secondAttribute="bottomMargin" id="s7Y-XA-OvR"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pQ0-LB-LXv" firstAttribute="leading" secondItem="r3c-cs-CuZ" secondAttribute="leading" id="87B-7G-gL6"/>
                             <constraint firstItem="r3c-cs-CuZ" firstAttribute="top" secondItem="pDl-Hw-03Q" secondAttribute="bottom" constant="46" id="SCp-4I-xXU"/>
+                            <constraint firstItem="pQ0-LB-LXv" firstAttribute="top" secondItem="r3c-cs-CuZ" secondAttribute="bottom" constant="46" id="W4m-3X-nV6"/>
                             <constraint firstItem="pDl-Hw-03Q" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="36" id="YFE-SU-umu"/>
+                            <constraint firstItem="pQ0-LB-LXv" firstAttribute="trailing" secondItem="r3c-cs-CuZ" secondAttribute="trailing" id="c8J-lm-8pJ"/>
                             <constraint firstItem="r3c-cs-CuZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="d7A-Je-ZHE"/>
                             <constraint firstAttribute="trailing" secondItem="pDl-Hw-03Q" secondAttribute="trailing" id="fb7-V9-0h5"/>
                             <constraint firstItem="pDl-Hw-03Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fiB-03-GS1"/>
                             <constraint firstAttribute="trailing" secondItem="r3c-cs-CuZ" secondAttribute="trailing" id="kxt-K4-1dj"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pQ0-LB-LXv" secondAttribute="bottom" constant="330" id="sPc-3A-8go"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="collectionview" destination="r3c-cs-CuZ" id="84t-IJ-3LT"/>
+                        <outlet property="collectionview" destination="r3c-cs-CuZ" id="rXF-WY-KbO"/>
+                        <outlet property="layout" destination="0JF-YA-HTk" id="4H3-pw-rwV"/>
                         <outlet property="link" destination="EpG-Uu-kA8" id="5pI-dn-h8X"/>
                         <outlet property="redview" destination="eAu-Ls-kbc" id="q10-EF-tKY"/>
+                        <outlet property="scrollview" destination="pQ0-LB-LXv" id="n76-mi-tcO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

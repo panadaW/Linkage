@@ -8,11 +8,15 @@
 
 #import "ViewController.h"
 
+
 @interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionview;
 @property(nonatomic,strong)UIDynamicAnimator *ani;
 @property (weak, nonatomic) IBOutlet UIView *redview;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *link;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
+@property(nonatomic,assign) NSInteger currentindex;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @end
 
 @implementation ViewController
@@ -22,21 +26,18 @@
     [self.collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionview.delegate = self;
     self.link.constant = 0;
+    [self setupChannel];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    //    添加仿真器
-//    UIDynamicAnimator *ani = [[UIDynamicAnimator alloc]initWithReferenceView:self.view];
-//    self.ani = ani;
-//    CGPoint point = [[touches anyObject]locationInView:self.view];
-//    //    捕捉行为
-//    
-//    UISnapBehavior *snp = [[UISnapBehavior alloc]initWithItem:self.redview snapToPoint:point];
-//    snp.damping = 0.5;
-//    [self.ani addBehavior:snp];
+-(void)viewDidLayoutSubviews {
+    self.layout.itemSize = self.collectionview.bounds.size;
+    self.collectionview.pagingEnabled = YES;
+    self.layout.minimumInteritemSpacing=0;
+    self.layout.minimumLineSpacing = 0;
 }
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 13;
+    return 3;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
@@ -44,36 +45,46 @@
     return cell;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [UIView animateWithDuration:12.0 animations:^{
-        CGFloat x = self.collectionview.contentOffset.x;
+            CGFloat x = self.collectionview.contentOffset.x;
         self.link.constant = x;
-        
-//        if (self.link.constant < 0 || self.link.constant > 209) {
-//            self.link.constant = 1;
-//        }
-        
-        
-    } completion:^(BOOL finished) {
-        NSLog(@"%f",self.link.constant);
-    }];
-
+//    NSArray *indexpaths = [self.collectionview indexPathsForVisibleItems];
+//    NSLog(@"%@",indexpaths);
+    [self setupChannel];
+   
 }
-//-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    //    添加仿真器
-//    UIDynamicAnimator *ani = [[UIDynamicAnimator alloc]initWithReferenceView:self.view];
-//    self.ani = ani;
-//    UITouch *touches = [[UITouch alloc]init];
-//    
-//    CGPoint point = [touches locationInView:self.view];
-//    //    捕捉行为
-//    
-//    UISnapBehavior *snp = [[UISnapBehavior alloc]initWithItem:self.redview snapToPoint:point];
-//    snp.damping = 0.5;
-//    [self.ani addBehavior:snp];
-//    
-//    CGFloat x = self.collectionview.contentOffset.x;
-//    self.link.constant = x;
-//
-//
-//}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.currentindex = self.collectionview.contentOffset.x/self.collectionview.frame.size.width;
+    NSLog(@"%ld",(long)self.currentindex);
+   [self setupChannel];
+}
+- (void)setupChannel {
+    
+    // *** 取消 scrollView 的自动缩进
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.scrollview.subviews[self.currentindex] reloadInputViews];
+    // 遍历频道数组，添加 label
+    CGFloat margin = 8.0;
+    CGFloat x = margin;
+    CGFloat h = self.scrollview.bounds.size.height;
+    
+    // 设置 contentSize
+    self.scrollview.contentSize = CGSizeMake(x + margin, h);
+    
+    // 当前选中第0项
+       // 设置第0个label的scale
+    UILabel *lab = self.scrollview.subviews[self.currentindex];
+    lab.font = [UIFont systemFontOfSize:18];
+    // 根据大字体设置大小
+    [lab sizeToFit];
+    [lab setUserInteractionEnabled:YES];
+    // 设置成小字体
+    lab.font = [UIFont systemFontOfSize:14];
+    lab.textColor = [UIColor redColor];
+    float nextScale = ABS((float)self.collectionview.contentOffset.x / self.collectionview.bounds.size.width - self.currentindex);
+//    float currentScale = 1 - nextScale;
+    CGFloat prsent = 2/7;
+    CGFloat scale = prsent *nextScale + 1;
+    lab.transform = CGAffineTransformMakeScale(scale, scale);
+}
+
 @end

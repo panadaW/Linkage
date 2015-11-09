@@ -501,6 +501,7 @@
 				E6328C531BEF312900899DC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6328C541BEF312900899DC5 /* Build configuration list for PBXNativeTarget "Link(联动)Tests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +510,7 @@
 				E6328C561BEF312900899DC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6328C571BEF312900899DC5 /* Build configuration list for PBXNativeTarget "Link(联动)UITests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +519,7 @@
 				E6328C591BEF312900899DC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
