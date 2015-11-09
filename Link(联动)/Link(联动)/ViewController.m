@@ -17,10 +17,29 @@
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
 @property(nonatomic,assign) NSInteger currentindex;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
+@property(nonatomic,strong)NSMutableArray *imagearray;
+@property(nonatomic,strong)UIImageView *imageview;
 @end
 
 @implementation ViewController
+//懒加载
+-(NSMutableArray *)imagearray {
+    if (_imagearray == nil) {
+        _imagearray = [NSMutableArray array];
+        for (int i = 0; i <= 4; i++) {
+             [_imagearray addObject:[NSString stringWithFormat:@"img_0%d",i]];
+        }
+       }
+    return _imagearray;
 
+}
+//懒加载
+-(UIImageView *)imageview {
+    if (_imageview == nil) {
+        _imageview = [[UIImageView alloc]initWithFrame:self.collectionview.frame];
+    }
+    return _imageview;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -37,11 +56,18 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 3;
+    return self.imagearray.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blueColor];
+//    cell.backgroundColor = [UIColor blueColor];
+    for (int i = 0; i <=4; i++) {
+        
+        self.imageview.image = [UIImage imageNamed:self.imagearray[i]];
+        [cell addSubview:self.imageview];
+    }
+   
+    
     return cell;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
