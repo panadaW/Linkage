@@ -30,7 +30,14 @@
     lable.textAlignment = NSTextAlignmentCenter;
     [lable sizeToFit];
     lable.font = [UIFont systemFontOfSize:CZNormalFontSize];
+//    允许交互
+    [lable setUserInteractionEnabled:YES];
     return lable;
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if ([self.delegate respondsToSelector:@selector(MyLableDidSelect:)]) {
+        [self.delegate MyLableDidSelect:self];
+    }
 
+}
 @end

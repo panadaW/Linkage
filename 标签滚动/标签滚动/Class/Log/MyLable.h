@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol MyLableDelegate;
 @interface MyLable : UILabel
 @property(nonatomic,assign)float scale;
+@property(nonatomic,weak)id<MyLableDelegate>delegate;
 //设置标签
 +(MyLable*)setUpLable:(NSString *)title;
+@end
+
+@protocol MyLableDelegate <NSObject>
+
+-(void)MyLableDidSelect:(UILabel*)lable;
+
 @end

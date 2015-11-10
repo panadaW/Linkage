@@ -10,8 +10,8 @@
 #define CZNormalFontSize 14.0
 #define CZSelectedFontSize 18.0
 #import "MyLable.h"
-
-@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+#import "MyCollectionCell.h"
+@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,MyLableDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionview;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
@@ -34,7 +34,7 @@
 -(void)prepareForCollectionview {
     self.layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.layout.itemSize = self.collectionview.bounds.size;
-[self.collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+//[self.collectionview registerClass:[MyCollectionCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionview.pagingEnabled = YES;
     self.layout.minimumInteritemSpacing = 0;
     self.layout.minimumLineSpacing = 0;
@@ -45,11 +45,14 @@
     CGFloat magrn = 8;
     CGFloat x = magrn;
      CGFloat h = self.scrollview.bounds.size.height;
+    NSInteger index = 0;
     for (int i = 0; i < 10; i++) {
         MyLable *lable = [MyLable setUpLable:[NSString stringWithFormat:@"标签%d",i]];
         lable.frame = CGRectMake(x, 0,lable.bounds.size.width , h);
         x+=lable.bounds.size.width;
         [self.scrollview addSubview:lable];
+        lable.delegate = self;
+        lable.tag = index++;
     }
     self.scrollview.contentSize = CGSizeMake(x +magrn, h);
     self.scrollview.backgroundColor = [UIColor yellowColor];
@@ -64,7 +67,7 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    MyCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:((float)arc4random_uniform(256)/255.0) green:((float)arc4random_uniform(256)/255.0) blue:((float)arc4random_uniform(256)/255.0) alpha:1.0];
     return cell;
 
@@ -103,5 +106,14 @@
 //更新索引
     self.currentindex = scrollView.contentOffset.x/scrollView.bounds.size.width;
 
+}
+//lable代理方法
+-(void)MyLableDidSelect:(UILabel *)lable {
+    NSLog(@"%@",lable);
+    self.currentindex = lable.tag;
+    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:self.currentindex inSection:0];
+//    滚动到相应的索引
+    [self.collectionview scrollToItemAtIndexPath:indexpath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+  
 }
 @end
