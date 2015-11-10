@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #define CZNormalFontSize 14.0
 #define CZSelectedFontSize 18.0
+#import "MyLable.h"
 
 @interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
@@ -29,6 +30,7 @@
     [self prepareForCollectionview];
 
 }
+//设置collectionview属性
 -(void)prepareForCollectionview {
     self.layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.layout.itemSize = self.collectionview.bounds.size;
@@ -44,7 +46,7 @@
     CGFloat x = magrn;
      CGFloat h = self.scrollview.bounds.size.height;
     for (int i = 0; i < 10; i++) {
-        UILabel *lable = [self setUpLable:[NSString stringWithFormat:@"你好乔安%d",i]];
+        MyLable *lable = [MyLable setUpLable:[NSString stringWithFormat:@"标签%d",i]];
         lable.frame = CGRectMake(x, 0,lable.bounds.size.width , h);
         x+=lable.bounds.size.width;
         [self.scrollview addSubview:lable];
@@ -52,25 +54,9 @@
     self.scrollview.contentSize = CGSizeMake(x +magrn, h);
     self.scrollview.backgroundColor = [UIColor yellowColor];
     self.currentindex = 0;
-    UILabel *lable = self.scrollview.subviews[0];
-    float percent = (CZSelectedFontSize - CZNormalFontSize) / CZNormalFontSize;
-    
-        percent = percent*1+1;
-        lable.transform = CGAffineTransformMakeScale(percent, percent);
-        lable.textColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+    MyLable *lable = self.scrollview.subviews[0];
+    lable.scale = 1;
 }
-//设置标签
--(UILabel*)setUpLable:(NSString *)title {
-    UILabel *lable = [[UILabel alloc]init];
-    lable.text = title;
-//    lable.textColor = [UIColor redColor];
-    lable.font = [UIFont systemFontOfSize:CZSelectedFontSize];
-    lable.textAlignment = NSTextAlignmentCenter;
-    [lable sizeToFit];
-    lable.font = [UIFont systemFontOfSize:CZNormalFontSize];
-    return lable;
-}
-
 //数据源方法
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 10;
@@ -86,11 +72,11 @@
 
 // 代理方法,只要滚动就会调用
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UILabel *lableN = self.scrollview.subviews[self.currentindex];
+    MyLable *lableN = self.scrollview.subviews[self.currentindex];
 
     NSArray *indexpaths = [self.collectionview indexPathsForVisibleItems];
-    NSLog(@"%@",indexpaths);
-    UILabel *lableNext = nil;
+//    NSLog(@"%@",indexpaths);
+    MyLable *lableNext = nil;
 //    循环便利数组
     for (NSIndexPath *path in indexpaths) {
         if (path.item != self.currentindex) {
@@ -105,18 +91,11 @@
     }
     float nextscale = ABS((float)self.collectionview.contentOffset.x / self.collectionview.bounds.size.width - self.currentindex);
     float scale = 1 - nextscale;
-    float percent = (CZSelectedFontSize - CZNormalFontSize) / CZNormalFontSize;
-    if ([UILabel isSubclassOfClass:[lableN class]]) {
-        percent = percent*scale +1;
-        lableN.transform = CGAffineTransformMakeScale(percent, percent);
-        lableN.textColor = [UIColor colorWithRed:scale green:0 blue:0 alpha:1];
 
-    } else if ([UILabel isSubclassOfClass:[lableNext class]]) {
-        percent = percent * nextscale + 1;
-        lableNext.transform = CGAffineTransformMakeScale(percent, percent);
-        lableNext.textColor = [UIColor colorWithRed:scale green:0 blue:0 alpha:1];
-
-    }
+    lableNext.textColor = [UIColor colorWithRed:scale green:0 blue:0 alpha:1];
+    lableN.scale = scale;
+    lableNext.scale = nextscale;
+    
     
 }
 
